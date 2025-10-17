@@ -1,0 +1,211 @@
+############################################################
+#  Wektory w języku R
+#  Podstawowy typ danych w R i operacje na nim
+############################################################
+
+#-----------------------------------------------------------
+# 1. Tworzenie wektorów
+#-----------------------------------------------------------
+
+# W R wszystko jest wektorem. Nawet liczba czy pojedynczy string
+length(2)        # długość wektora jednoelementowego
+
+# Funkcja c() służy do łączenia elementów
+x <- c(2, 5, 8)
+x
+length(x)
+
+# Wektor jest zawsze płaski
+c(c(1, 2), c(5, 6))
+
+# Wektory z nazwami (kluczami)
+x <- c("pierwsza" = 4, druga = 8, "trzecia" = 9, 121,
+       "👦" = 222, "druga" = 321)
+x
+names(x)                # pobranie kluczy
+names(x) <- LETTERS[1:6] # nadanie nowych
+x
+names(x) <- NULL         # usunięcie kluczy
+x
+
+
+#-----------------------------------------------------------
+# 2. Generowanie wektorów
+#-----------------------------------------------------------
+
+# Operator :
+1:5
+1.14:5
+5:1
+-5:5
+5:-5
+
+# Kolejność działań
+2 * 2:7
+(2 * 2):7
+1:2^2
+
+# Funkcja seq()
+seq(from = 0, to = 1, by = 0.1)
+seq(from = 1, to = -1, by = -0.25)
+
+seq(from = 0, to = 1, length.out = 7)
+seq(from = 1, to = -1, length.out = 13)
+
+x <- 5:1
+seq(from = 0, to = 1, along.with = x)
+
+# Funkcja rep()
+rep(0, 10)
+rep(c(0,1), 10)
+rep(1:4, 5)
+
+# Wektory zerowe różnych typów
+integer(7)
+double(20)
+numeric(11)
+
+
+#-----------------------------------------------------------
+# 3. Operacje na wektorach
+#-----------------------------------------------------------
+
+x <- 1:5
+
+# Operacje matematyczne (zwektoryzowane)
+sin(x); log(x); cos(x); exp(x)
+x^2
+sqrt(x)
+
+# Funkcje agregujące
+length(x)
+mean(x)
+sd(x)
+min(x); max(x)
+range(x)
+median(x)
+quantile(x, .25)
+
+# Operacje algebraiczne
+y <- 5:1
+2 * x
+x + y
+2 * x - 5 * y
+
+# Reguła "recycling rule"
+x <- 4:1; y <- 1:2
+x + y
+x * y
+
+y <- 1:3
+x + y                 # ostrzeżenie
+suppressWarnings(x+y) # bez ostrzeżenia
+
+# Powtarzanie wektorów
+numeric(20) + c(0, 1)
+rep(0:1, 10)
+
+
+#-----------------------------------------------------------
+# 4. Co może przechowywać wektor?
+#-----------------------------------------------------------
+
+# Proste typy
+c(TRUE, FALSE)
+c(4, 6, 7)
+c("ala", "ma", "kota")
+
+# Typy złożone → lista
+c(sin, cos)
+c(emptyenv(), globalenv())
+
+# Konwersje do szerszych typów
+c(TRUE, FALSE, 3L, 3.14, 2+4i, "fox")
+
+# Symbole specjalne: NA, NaN, Inf
+x <- c(1, NA, 3)
+sin(x)
+
+c(1,2,NA) + c(NA,2,3)
+log(c(-1, 1, 2))
+
+NA + NaN
+Inf + NA
+Inf + NaN
+
+x <- c(-Inf, 0, Inf)
+exp(x)
+1/0
+
+
+#-----------------------------------------------------------
+# 5. Macierze
+#-----------------------------------------------------------
+
+# Tworzenie macierzy: matrix()
+matrix(1:9, nrow=3, ncol=3)
+matrix(1:9, nrow=3, ncol=3, byrow=TRUE)
+
+mA <- matrix(1:9, 3, 3, byrow=TRUE,
+             dimnames=list(wiersze=c("pierwszy","drugi","trzeci"),
+                           kolumny=c("Kol. A","Kol. B","Kol. C")))
+mA
+rownames(mA); colnames(mA)
+
+# Zmiana nazw
+rownames(mA) <- c("wiersz 1","wiersz 2","wiersz 3")
+colnames(mA) <- LETTERS[1:3]
+mA
+
+# Recycling rule przy macierzach
+suppressWarnings(matrix(c(1,0,0,0), 3, 3))
+
+# Tworzenie macierzy: array()
+array(1:9, dim=c(3,3))
+array(1:9, dim=c(3,3),
+      dimnames=list(wiersze=c("pierwszy","drugi","trzeci"),
+                    kolumny=c("Kol. A","Kol. B","Kol. C")))
+
+# Typy i atrybuty
+typeof(mA); class(mA); attributes(mA)
+
+# Macierz jako wektor z atrybutem dim
+mC <- 1:12; dim(mC) <- c(4,3); mC; class(mC)
+mD <- 1:12; attr(mD,"dim") <- c(4,3); mD; class(mD)
+
+# Obliczenia na macierzach
+mX <- matrix(round(rnorm(16),2),4,4)
+b  <- round(rnorm(4),2)
+
+t(mX)           # transpozycja
+det(mX)         # wyznacznik
+solve(mX)       # macierz odwrotna
+solve(mX) %*% mX
+eigen(mX)       # wartości własne
+svd(mX)         # dekompozycja SVD
+
+# Konwersja i test
+is.matrix(mA)
+as.vector(mA)
+
+
+#-----------------------------------------------------------
+# 6. Zadania dla studentów
+#-----------------------------------------------------------
+
+# Zadanie 1:
+# Skrypt tworzący wektor długości n, modyfikowany według reguł:
+# - początkowo same zera
+# - do indeksów parzystych dodaj 1
+# - do indeksów podzielnych przez 3 dodaj 5
+
+# Zadanie 2:
+# Skrypt tworzący wektor: 1 sep 2 sep 3 sep ...
+# (np. sep <- 0)
+
+# Zadanie 3:
+# Skrypt z blokiem "przerywników" długości k
+# (np. 1 0 0 0 2 0 0 0 3 ...)
+
+# Zadanie 4:
+# Dla wektora 1:n, oblicz sumę liczb podzielnych przez 3
