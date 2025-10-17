@@ -1,0 +1,123 @@
+############################################################
+#  Podstawy R – pierwszy kontakt z językiem
+############################################################
+
+#-----------------------------------------------------------
+# 1. R jako kalkulator
+#-----------------------------------------------------------
+
+# W konsoli R można wykonywać zwykłe obliczenia
+2 + 2
+5 * 3
+10 / 4
+2^8    # potęga
+
+# Kolejność działań jak w matematyce
+3 + 2 * 5
+
+
+#-----------------------------------------------------------
+# 2. Zmienne i przypisanie
+#-----------------------------------------------------------
+
+# Wyniki obliczeń możemy zapisywać do obiektów (zmiennych).
+# Operator przypisania to "<-" (zalecany w R).
+x <- 5
+y <- 3
+x + y
+
+# Możemy też używać "=" ale "<-" jest standardem.
+z = 10
+z
+
+# Nadpisywanie wartości
+x <- x + 1
+x
+
+
+#-----------------------------------------------------------
+# 3. Funkcje i argumenty
+#-----------------------------------------------------------
+
+# R ma wiele wbudowanych funkcji. 
+# Funkcję wywołujemy nazwą + nawiasy.
+sqrt(16)         # pierwiastek kwadratowy
+round(3.14159, 2) # zaokrąglanie do 2 miejsc
+
+# Funkcje mają argumenty nazwane.
+# Kolejność można zmieniać podając nazwy:
+round(x = 3.14159, digits = 3)
+
+
+#-----------------------------------------------------------
+# 4. Pomoc i dokumentacja
+#-----------------------------------------------------------
+
+# Dokumentację do funkcji otwieramy:
+?round
+help(sqrt)
+
+# Lista wszystkich wbudowanych datasetów
+data()
+
+# Pomoc ogólna, np. o arytmetyce:
+help("+")
+?Arithmetic
+
+
+#-----------------------------------------------------------
+# 5. Ścieżki i katalog roboczy
+#-----------------------------------------------------------
+
+# Sprawdzenie aktualnego katalogu roboczego
+getwd()
+
+# Zmiana katalogu (przykład – trzeba podać własną ścieżkę)
+# setwd("C:/Users/student/Documents")
+
+
+#-----------------------------------------------------------
+# 6. Pakiety
+#-----------------------------------------------------------
+
+# Instalacja pakietu z CRAN (wystarczy raz)
+# install.packages("dplyr")
+
+# Załadowanie pakietu do bieżącej sesji
+library(dplyr)
+
+# Teraz można korzystać z funkcji pakietu
+sample_n(mtcars, 5)
+
+
+#-----------------------------------------------------------
+# 7. Dane wbudowane
+#-----------------------------------------------------------
+
+# R zawiera wiele przykładowych zbiorów danych, np. mtcars
+data(mtcars)  # upewniamy się, że jest dostępny
+
+# Obejrzenie zbioru
+head(mtcars)   # pierwsze wiersze
+tail(mtcars)   # ostatnie wiersze
+dim(mtcars)    # wymiary
+str(mtcars)    # struktura
+
+# Proste obliczenia na danych
+mean(mtcars$mpg)    # średnie spalanie
+summary(mtcars)     # podsumowanie wszystkich zmiennych
+
+
+#-----------------------------------------------------------
+# 8. Pierwszy wykres
+#-----------------------------------------------------------
+
+# R ma wbudowane funkcje do wykresów
+plot(mtcars$wt, mtcars$mpg,
+     main = "Zużycie paliwa a masa samochodu",
+     xlab = "Masa (1000 lbs)",
+     ylab = "Mile na galon")
+
+############################################################
+# Koniec – od tego miejsca przechodzimy do typów i wektorów
+############################################################
