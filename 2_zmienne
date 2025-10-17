@@ -1,0 +1,65 @@
+############################################################
+#  Podstawowe typy bazowe w R
+############################################################
+
+# W R nie musimy deklarować typu zmiennej.
+# To nie oznacza, że język nie ma typów!
+#
+# Typy w R można podzielić na:
+# - typy bazowe (proste), które są wbudowane i niezmienne,
+# - klasy, które możemy definiować sami.
+#
+# Poniżej przykłady najważniejszych typów prostych
+# oraz kilku bardziej złożonych.
+
+#-----------------------------------------------------------
+# Typ logical
+#-----------------------------------------------------------
+typeof(TRUE)
+typeof(FALSE)
+
+#-----------------------------------------------------------
+# Typ integer
+#-----------------------------------------------------------
+typeof(2L)
+typeof(2L + 3L)
+
+#-----------------------------------------------------------
+# Typ double (liczby zmiennoprzecinkowe)
+#-----------------------------------------------------------
+typeof(2)
+typeof(3.14)
+
+#-----------------------------------------------------------
+# Typ complex (liczby zespolone)
+#-----------------------------------------------------------
+typeof(3 + 4i)
+
+#-----------------------------------------------------------
+# Typ list (lista – struktura ogólna)
+#-----------------------------------------------------------
+typeof(list(1))
+
+#-----------------------------------------------------------
+# Typ closure (funkcja)
+#-----------------------------------------------------------
+typeof(plot)
+typeof(function() {})
+
+#-----------------------------------------------------------
+# Typ environment (środowisko)
+#-----------------------------------------------------------
+typeof(globalenv())
+
+#-----------------------------------------------------------
+# Typ language (wyrażenie R)
+#-----------------------------------------------------------
+typeof(quote(sin(pi/2)))
+
+#-----------------------------------------------------------
+# Typ a klasa obiektu
+#-----------------------------------------------------------
+# Każdy obiekt w R ma typ bazowy.
+# Dodatkowo obiekt może mieć przypisaną klasę.
+# Funkcja class() zwraca klasę obiektu,
+# a jeśli nie została ustawiona – zwraca typ bazowy.
