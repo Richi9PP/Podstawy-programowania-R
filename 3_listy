@@ -1,0 +1,157 @@
+############################################################
+#  Listy w języku R
+#  Druga podstawowa struktura danych (po wektorach)
+############################################################
+
+# Listy są wolniejsze od wektorów i wymagają więcej pamięci,
+# ale w przeciwieństwie do nich mogą przechowywać:
+# - dowolne typy obiektów,
+# - elementy różnych typów jednocześnie,
+# - zagnieżdżone struktury (listy w listach).
+
+
+#-----------------------------------------------------------
+# 1. Tworzenie list
+#-----------------------------------------------------------
+
+# Tworzymy listy przy pomocy funkcji list()
+a <- list(
+  pierwsza = TRUE,
+  druga    = rnorm(5),
+  trzecia  = list(
+    "zagłębienie 1" = sin,
+    "zagłębienie 2" = cos
+  ),
+  druga    = matrix(1:4, 2, 2), # powtarzający się klucz
+  555,                          # brak klucza
+  druga    = FALSE              # ponownie powtarzający się klucz
+)
+
+a
+typeof(a)
+class(a)
+attributes(a)
+
+# Konwersja wektora do listy
+x <- rnorm(5)
+y <- as.list(x)
+y
+
+# Konwersja listy do wektora (uwaga: ograniczenia typów)
+z <- unlist(y)
+typeof(z)
+
+
+#-----------------------------------------------------------
+# 2. Operacje na listach
+#-----------------------------------------------------------
+
+# Operacje na listach to głównie operacje strukturalne:
+# - dodawanie elementów,
+# - usuwanie elementów,
+# - zmiana wartości,
+# - zmiana nazw kluczy.
+
+# Tworzymy prostą listę
+a <- list(a = 5, b = 123)
+
+# Dodawanie pól (łączenie list)
+a <- c(a, list("nowe pole" = TRUE))
+a
+
+a <- c(list("pierwsze pole" = TRUE), a)
+a
+
+# Automatyczne tworzenie nowego elementu
+a[["nowy klucz"]] <- "nowa wartość"
+a
+
+a["całkiem nowy klucz"] <- "całkiem nowa wartość"
+a
+
+# Usuwanie elementów
+a <- a[-1]           # usunięcie pierwszego pola
+a <- a[c(-1, -4)]    # usunięcie pól 1 i 4
+a$`całkiem nowy klucz` <- NULL  # usunięcie przez przypisanie NULL
+a
+
+# Zmiana wartości pola
+a[["b"]] <- rnorm(5)     # przez klucz
+a[[1]] <- sin            # przez indeks
+a$b <- round(rnorm(7),2) # notacja skrótowa
+a
+
+# Zmiana nazw pól
+names(a)
+names(a) <- LETTERS[1:2]    # zmiana wszystkich
+a
+names(a)[1] <- "losowa próba" # zmiana jednego klucza
+a
+
+
+#-----------------------------------------------------------
+# 3. Ramki danych (data.frame)
+#-----------------------------------------------------------
+
+# Ramki danych to specjalne listy:
+# - klucze = nazwy kolumn,
+# - wartości = wektory (kolumny danych).
+# Dodane są atrybuty opisujące wymiary i klasy.
+
+# Tworzenie ramki danych
+df <- data.frame(
+  id    = 1:5,
+  value = rnorm(5),
+  type  = sample(LETTERS[1:2], size=5, replace=TRUE)
+)
+df
+typeof(df)
+class(df)
+attributes(df)
+
+# Tworzenie ramki danych przez konwersję listy
+b <- list(
+  id    = 1:5,
+  value = rnorm(5),
+  type  = sample(LETTERS[1:2], size=5, replace=TRUE)
+)
+as.data.frame(b)
+
+# Manualne nadanie klasy data.frame
+b <- list(
+  id    = 1:5,
+  value = rnorm(5),
+  type  = sample(LETTERS[1:2], size=5, replace=TRUE)
+)
+class(b) <- "data.frame"
+rownames(b) <- 1:5
+b
+class(b)
+
+# Wczytywanie danych do ramki danych
+cars <- mtcars
+typeof(cars)
+class(cars)
+
+# Funkcje do oglądania ramek
+dim(cars)   # wymiary
+str(cars)   # struktura
+head(cars)  # pierwsze wiersze
+tail(cars)  # ostatnie wiersze
+
+#-----------------------------------------------------------
+# 4. Łączenie ramek danych
+#-----------------------------------------------------------
+
+# Łączenie kolumnami (cbind)
+a <- data.frame(id = 1:5, values = rnorm(5))
+b <- data.frame(class = sample(LETTERS[1:2], size=5, replace=TRUE))
+cbind(a, b)
+
+# Łączenie wierszami (rbind)
+a <- data.frame(id = 1:5, values = rnorm(5),
+                class = sample(LETTERS[1:2], size=5, replace=TRUE))
+b <- data.frame(id = 6:10, values = rnorm(5),
+                class = sample(LETTERS[1:2], size=5, replace=TRUE))
+rbind(a, b)
+
