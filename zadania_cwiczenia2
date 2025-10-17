@@ -1,0 +1,84 @@
+x <- seq(-10, 10, 0.1)
+y <- (x^2 - 10)
+plot(x, y, type = "l", col = "red", lwd =2 )
+lines(x[y>0], y[y>0], col="blue")
+
+a <- matrix(round(rnorm(12), 2),3 ,4) 
+
+a[1,2]
+a[1:2,3]
+print(a)
+
+a[a[,1]>0.6,]
+
+rownames(a) <- letters[1:3]
+colnames(a)<- letters[1:4]
+
+a
+
+b <- matrix(letters[1:12], 3)
+b
+
+
+lista <- list(
+  num = 5,
+  wektor = rnorm(3),
+  macierz = matrix(runif(12), 4),
+  lista = list(fun1 = sin, fun2 = cos),
+  "tekst"
+)
+
+typeof(lista[1])
+typeof(lista[[1]])
+
+lista$wektor
+
+df <- data.frame(
+  id = 1:5,
+  value = rnorm(5),
+  grupa = sample(letters[1:2], 5, replace = TRUE)
+)
+df
+lista
+
+df[1] # lista
+df[[1]]#wektor
+df$id[3]
+
+df$nowa_kolumna <- 100
+df
+
+#ZADANIE - 
+#narysuj wykres zaleznosci miedzy soalaniem a moca, 
+#rozne kolory dla roznej liczby cylindrow
+#linie na srednich
+#linia regresji
+
+#1rozwiazanie
+data(mtcars)
+mtcars
+
+spalanie <- 1/(mtcars$mpg * 0.43)*100
+moc <- mtcars$hp
+
+plot(spalanie, moc, col=mtcars$cyl)
+
+model <- lm(moc ~ spalanie)
+abline(v = mean(spalanie), col = "red", lty = 2, lwd = 2)
+abline(h = mean(moc), col = "blue", lty = 2, lwd = 2)
+abline(model, col = "black", lwd = 2)
+
+#2rozwiazanie
+spalanie <- 1/(mtcars$mpg * 0.43)*100
+moc <- mtcars$hp
+
+plot(spalanie, moc, col="red")
+points(spalanie[mtcars$cyl ==6], moc[mtcars$cyl ==6], col = "green")
+points(spalanie[mtcars$cyl ==8], moc[mtcars$cyl ==8], col = "blue")
+
+model <- lm(moc ~ spalanie)
+abline(v = mean(spalanie), col = "red", lty = 2, lwd = 2)
+abline(h = mean(moc), col = "blue", lty = 2, lwd = 2)
+abline(model, col = "magenta", lty = "dotted", lwd = 2)
+
+legend("topleft", col = c("red", "green", "blue"), legend = paste("cyl =", c(4 , 6, 8)))
